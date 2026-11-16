@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Habitual – Habit &amp; Schedule Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar on desktop, bottom bar on mobile -->
+  <aside class="side">
+    <div class="brand"><span class="dot"></span>Habitual</div>
+    <nav class="tabs" aria-label="Views">
+      <button class="tab" data-tab="today"> <span>Today</span><b id="badgeToday">0</b></button>
+      <button class="tab" data-tab="timetable"> <span>Timetable</span><b id="badgeAll">0</b></button>
+      <button class="tab" data-tab="picker"> <span>Habits</span></button>
+    </nav>
+    <button class="btn primary add-side" data-open-add> Recurring task</button>
+  </aside>
+
+  <main>
+    <!-- TODAY -->
+    <section id="view-today" class="view" aria-labelledby="todayTitle">
+      <header class="head">
+        <div>
+          <h1 id="todayTitle">Today</h1>
+          <p class="muted" id="dateText"></p>
+        </div>
+        <div class="row">
+          <button class="chip" data-goto-today>Today</button>
+          <button class="ib" data-shift="-7" aria-label="Previous week">‹</button>
+          <button class="ib" data-shift="7" aria-label="Next week">›</button>
+        </div>
+      </header>
+      <div class="strip" id="strip"></div>
+      <div class="progress">
+        <div class="row between"><b>Daily completion</b><b id="pct" class="accent">0%</b></div>
+        <div class="bar" role="progressbar" aria-label="Daily completion" aria-valuemin="0" aria-valuemax="100"><i id="fill"></i></div>
+        <p class="muted small" id="pctText"></p>
+      </div>
+      <div class="chips" id="filters" role="group" aria-label="Filter by category"></div>
+      <div class="scroll" id="tasks"></div>
+      <form class="quick" id="quickForm">
+        <select id="quickCat" aria-label="Category"></select>
+        <input id="quickInput" type="text" placeholder="Add a one-off task for this day…" aria-label="New task" required autocomplete="off">
+        <button class="btn primary" type="submit">Add</button>
+      </form>
+    </section>
+
+    <!-- TIMETABLE -->
+    <section id="view-timetable" class="view" aria-labelledby="ttTitle" hidden>
+      <header class="head">
+        <div>
+          <h1 id="ttTitle">Timetable</h1>
+          <p class="muted">Recurring lectures, labs &amp; habits</p>
+        </div>
+        <button class="btn primary" data-open-add>＋ Add</button>
+      </header>
+      <div class="chips" id="ttDays" role="group" aria-label="Filter by day"></div>
+      <div class="scroll" id="ttList"></div>
+    </section>
+
+    <!-- HABIT PICKER -->
+    <section id="view-picker" class="view" aria-labelledby="pickTitle" hidden>
+      <header class="head">
+        <div>
+          <h1 id="pickTitle">Pick some habits</h1>
+          <p class="muted">Tap to select, then add them to your daily schedule.</p>
+        </div>
+      </header>
+      <div class="scroll"><div class="pills" id="pills"></div></div>
+      <div class="foot"><button class="btn primary wide" data-confirm-picks>Add selected habits →</button></div>
+    </section>
+  </main>
+</div>
+
+<!-- ADD / EDIT DIALOG -->
+<dialog id="dlg" aria-labelledby="dlgTitle" closedby="any">
+  <form id="taskForm">
+    <div class="row between">
+      <h2 id="dlgTitle">Add recurring task</h2>
+      <button type="button" class="ib" id="dlgClose" aria-label="Close">✕</button>
+    </div>
+    <label class="field">Task or subject name
+      <input id="fName" type="text" required maxlength="80" placeholder="e.g. DBMS Lecture, Morning jog" autofocus>
+    </label>
+    <div class="grid3">
+      <label class="field">Category <select id="fCat"></select></label>
+      <label class="field">Start <input id="fStart" type="time"></label>
+      <label class="field">End <input id="fEnd" type="time"></label>
+    </div>
+    <fieldset class="field">
+      <legend>Repeat on</legend>
+      <div class="row presets">
+        <button type="button" class="chip" data-preset="all">Every day</button>
+        <button type="button" class="chip" data-preset="weekdays">Weekdays</button>
+        <button type="button" class="chip" data-preset="none">Clear</button>
+      </div>
+      <div class="days" id="fDays"></div>
+    </fieldset>
+    <p class="error" id="formError" role="alert" hidden>Pick at least one day.</p>
+    <div class="row end">
+      <button type="button" class="btn" id="dlgCancel">Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
