@@ -1,6 +1,7 @@
-# Habitual
+## Habitual
 
-A simple habit tracker and college schedule manager. Runs entirely in the browser, with no build step or server.
+
+A simple Habit Tracker and College schedule manager. Runs entirely in the browser, with no build step or server.
 
 ## Run it
 
